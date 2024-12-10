@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume</title>
+    <link rel="stylesheet" href="stylesheet.css">
+    
+    <style>
+        
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        button {
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            margin: 1rem 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            background-color: #f3f3f3;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress {
+            height: 1rem;
+            width: 0%;
+            background-color: #4caf50;
+            transition: width 1s;
+        }
+
+        th, td {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>RESUME</h1>
+        <nav aria-label="Main navigation">
+            <a href="index.html">Home</a>
+            <a href="biodata_.html">Bio-data</a>
+        </nav>
+        <nav>
+            
+            <a href="#career">Career Objective</a>
+            <a href="#education">Education</a>
+            <a href="#skills">Technical Skills</a>
+        </nav>
+        <!--<button id="theme-toggle">Toggle Theme</button>-->
+        <button id="theme-toggle">🌙</button>
+    </header>
+    <main class="resume-container">
+        <div class="header-container">
+            <div class="header-left">
+                <h1>Rajashekar M R</h1>
+                <p>Srinivasa Nilaya<br>Near APMC Mulbagilu<br>Mulbagilu, Kolar, Karnataka - 563131</p>
+                <p>Email: <a href="mailto:ramr22cs@cmrit.ac.in">ramr22cs@cmrit.ac.in</a></p>
+                <p>Mobile: +91 8310378416</p>
+            </div>
+            <div class="header-right">
+                <img src="Raj.jpg" alt="Profile Picture">
+            </div>
+        </div>
+        <section id="career">
+            <h2>Career Objective</h2>
+            <p id="career-text">
+                Determined and hardworking person looking for a challenging job within a rapidly growing organization where I can
+                <span id="dots">...</span>
+                <span id="more-text" style="display: none;"> implement my technical skills and theoretical knowledge in real-time approaching situations to benefit both my career and the organization.</span>
+            </p>
+            <button id="read-more-btn">Read More..</button>
+        </section>
+        <section id="education">
+            <h2>Education Qualification</h2>
+            <table id="education-table">
+                <thead>
+                    <tr>
+                        <th>Qualification</th>
+                        <th>Institution</th>
+                        <th id="sort-year">Year &#8595;</th>
+                        <th id="sort-score">Score &#8595;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Bachelor of Engineering – Computer Science and Engineering</td>
+                        <td>CMR Institute of Technology, Bengaluru</td>
+                        <td>2026 (Pursuing)</td>
+                        <td>7.27 CGPA</td>
+                    </tr>
+                    <tr>
+                        <td>Pre-University Course – Science</td>
+                        <td>Daksha Independent PU College, Mysuru</td>
+                        <td>2021</td>
+                        <td>99.33%</td>
+                    </tr>
+                    <tr>
+                        <td>SSLC</td>
+                        <td>Adarsha Vidyalaya (R.M.S.A), Thathikallu, Mulbagilu</td>
+                        <td>2019</td>
+                        <td>95.20%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section id="skills">
+            <h2>Technical Skills</h2>
+            <ul>
+                <li>
+                    <span>Programming Languages:</span>
+                    <div class="progress-bar"><div class="progress" style="width: 70%;"></div></div>
+                </li>
+                <li>
+                    <span>Database:</span>
+                    <div class="progress-bar"><div class="progress" style="width: 50%;"></div></div>
+                </li>
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <p>© 2024 Rajashekar M R. All rights reserved.</p>
+    </footer>
+    <script>
+        
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            themeToggle.textContent = document.body.classList.contains('dark-theme') ? '☀️' : '🌙';
+        });
+
+       
+
+        document.querySelectorAll("nav a").forEach(link => {
+    link.addEventListener("click", e => {
+        const href = link.getAttribute("href");
+
+        // If the link is an internal link (starts with #)
+        if (href.startsWith("#")) {
+            e.preventDefault(); // Prevent default behavior
+            const target = document.querySelector(href); // Find the target section
+            if (target) {
+                target.scrollIntoView({ behavior: "smooth" }); // Smooth scrolling
+            }
+        } else {
+            // For external links (other pages), allow normal navigation
+            // No need for e.preventDefault() here
+        }
+        });
+        });
+
+        
+        const dots = document.getElementById("dots");
+        const moreText = document.getElementById("more-text");
+        const readMoreBtn = document.getElementById("read-more-btn");
+        readMoreBtn.addEventListener("click", () => {
+            if (dots.style.display === "none") {
+                dots.style.display = "inline";
+                moreText.style.display = "none";
+                readMoreBtn.textContent = "Read More";
+            } else {
+                dots.style.display = "none";
+                moreText.style.display = "inline";
+                readMoreBtn.textContent = "Read Less";
+            }
+        });
+
+        // Education Table Sorting
+        const table = document.getElementById("education-table");
+        const sortYear = document.getElementById("sort-year");
+        const sortScore = document.getElementById("sort-score");
+
+        function sortTable(columnIndex, isNumeric) {
+            const rows = Array.from(table.rows).slice(1);
+            rows.sort((a, b) => {
+                const valA = a.cells[columnIndex].textContent.trim();
+                const valB = b.cells[columnIndex].textContent.trim();
+                return isNumeric
+                    ? parseFloat(valA) - parseFloat(valB)
+                    : valA.localeCompare(valB);
+            });
+            rows.forEach(row => table.tBodies[0].appendChild(row));
+        }
+
+        sortYear.addEventListener("click", () => sortTable(2, false));
+        sortScore.addEventListener("click", () => sortTable(3, true));
+
+        // Animate Progress Bars
+        const progressBars = document.querySelectorAll(".progress");
+        progressBars.forEach(bar => {
+            setTimeout(() => bar.style.width = bar.style.width, 500);
+        });
+    </script>
+</body>
+</html>
